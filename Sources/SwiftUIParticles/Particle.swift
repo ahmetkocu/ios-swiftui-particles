@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Particle {
+struct Particle {
     var radius: Float
     var x: Float
     var y: Float

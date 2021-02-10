@@ -14,22 +14,22 @@ public struct ParticlesView: View {
     @State private var path: Path = Path()
     
     // Attribute Defaults
-    var _particleCount = 20
-    var _particleMinRadius = 5
-    var _particleMaxRadius = 10
-    var _particlesBackgroundColor = Color.black
-    var _particleColor = Color.white
-    var _particleLineColor = Color.white
-    var _particleLinesEnabled = true
+    public var _particleCount = 20
+    public var _particleMinRadius = 5
+    public var _particleMaxRadius = 10
+    public var _particlesBackgroundColor = Color.black
+    public var _particleColor = Color.white
+    public var _particleLineColor = Color.white
+    public var _particleLinesEnabled = true
     
-    let timer = Timer.publish(
+    private let timer = Timer.publish(
         every: 0.09,       // Second
             tolerance: 0.1, // Gives tolerance so that SwiftUI makes optimization
             on: .main,      // Main Thread
             in: .common     // Common Loop
         ).autoconnect()
     
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .top) {
             _particlesBackgroundColor
                 .edgesIgnoringSafeArea(.all)
@@ -94,7 +94,7 @@ public struct ParticlesView: View {
         }
     }
     
-    func setupParticles() {
+    private func setupParticles() {
         if !hasSetup {
             hasSetup = true
             self.particles.removeAll()
