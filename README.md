@@ -2,6 +2,8 @@
 
 Swift package for displaying particle animation effortlessly.
 
+![SwiftUI Particles](./Resources/particles2.gif "SwiftUI Particles")
+
 ### Installation:
 
 It requires iOS 13 and Xcode 11!
