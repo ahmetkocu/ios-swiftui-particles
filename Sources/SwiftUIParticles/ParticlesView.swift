@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ParticlesView: View {
+public struct ParticlesView: View {
     @State private var particles: [Particle] = [Particle]()
     @State private var hasSurface: Bool = false
     @State private var hasSetup: Bool = false
