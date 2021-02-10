@@ -2,7 +2,7 @@
 
 Swift package for displaying particle animation effortlessly.
 
-![SwiftUI Particles](./Resources/particles2.gif "SwiftUI Particles")
+![SwiftUI Particles](./Resources/particles.gif "SwiftUI Particles")
 
 ### Installation:
 
