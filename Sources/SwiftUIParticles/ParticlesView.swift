@@ -14,13 +14,13 @@ public struct ParticlesView: View {
     @State private var path: Path = Path()
     
     // Attribute Defaults
-    public var _particleCount = 20
-    public var _particleMinRadius = 5
-    public var _particleMaxRadius = 10
-    public var _particlesBackgroundColor = Color.black
-    public var _particleColor = Color.white
-    public var _particleLineColor = Color.white
-    public var _particleLinesEnabled = true
+    private var _particleCount = 20
+    private var _particleMinRadius = 5
+    private var _particleMaxRadius = 10
+    private var _particlesBackgroundColor = Color.black
+    private var _particleColor = Color.white
+    private var _particleLineColor = Color.white
+    private var _particleLinesEnabled = true
     
     private let timer = Timer.publish(
         every: 0.09,       // Second
@@ -29,6 +29,23 @@ public struct ParticlesView: View {
             in: .common     // Common Loop
         ).autoconnect()
     
+    public init(particleCount: Int = 20,
+                particleMinRadius: Int = 5,
+                particleMaxRadius: Int = 10,
+                particlesBackgroundColor: Color = Color.black,
+                particleColor: Color = Color.white,
+                particleLineColor: Color = Color.white,
+                particleLinesEnabled: Bool = true) {
+        
+        self._particleCount = particleCount
+        self._particleMinRadius = particleMinRadius
+        self._particleMaxRadius = particleMaxRadius
+        self._particlesBackgroundColor = particlesBackgroundColor
+        self._particleColor = particleColor
+        self._particleLineColor = particleLineColor
+        self._particleLinesEnabled = particleLinesEnabled
+    }
+    
     public var body: some View {
         ZStack(alignment: .top) {
             _particlesBackgroundColor
@@ -36,25 +53,27 @@ public struct ParticlesView: View {
             
             ForEach(particles, id: \.self) { item in
                 
-                ForEach(particles, id: \.self) { item2 in
-                    if item.x != item2.x &&
-                        item.y != item2.y {
-                        
-                        let dx = item.x - item2.x
-                        let dy = item.y - item2.y
-                        let dist = sqrt(dx * dx + dy * dy)
-                        
-                        if dist < 120 {
-                            let distRatio = (120 - dist) / 120
-                            let mm = (min(item.alpha, item2.alpha) * distRatio) / 2
+                if _particleLinesEnabled {
+                    ForEach(particles, id: \.self) { item2 in
+                        if item.x != item2.x &&
+                            item.y != item2.y {
                             
-                            Path { path in
-                                path.move(to: CGPoint(x: CGFloat(item.x), y: CGFloat(item.y)))
-                                path.addLine(to: CGPoint(x: CGFloat(item2.x), y: CGFloat(item2.y)))
+                            let dx = item.x - item2.x
+                            let dy = item.y - item2.y
+                            let dist = sqrt(dx * dx + dy * dy)
+                            
+                            if dist < 120 {
+                                let distRatio = (120 - dist) / 120
+                                let mm = (min(item.alpha, item2.alpha) * distRatio) / 2
+                                
+                                Path { path in
+                                    path.move(to: CGPoint(x: CGFloat(item.x), y: CGFloat(item.y)))
+                                    path.addLine(to: CGPoint(x: CGFloat(item2.x), y: CGFloat(item2.y)))
+                                }
+                                //.fill(Color.white)
+                                .stroke(Color.white, lineWidth: 2)
+                                .opacity(Double(mm))
                             }
-                            //.fill(Color.white)
-                            .stroke(Color.white, lineWidth: 2)
-                            .opacity(Double(mm))
                         }
                     }
                 }
@@ -108,6 +127,6 @@ public struct ParticlesView: View {
 
 struct ParticlesView_Previews: PreviewProvider {
     static var previews: some View {
-        ParticlesView(_particleCount: 20, _particleMinRadius: 5, _particleMaxRadius: 10, _particlesBackgroundColor: .black, _particleColor: .white, _particleLineColor: .white, _particleLinesEnabled: true)
+        ParticlesView(particleCount: 20, particleMinRadius: 5, particleMaxRadius: 10, particlesBackgroundColor: .black, particleColor: .white, particleLineColor: .white, particleLinesEnabled: true)
     }
 }
